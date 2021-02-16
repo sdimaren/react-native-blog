@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { View, Text, StyleSheet, FlatList, Button, TouchableOpacity } from 'react-native';
 import { Context } from '../context/BlogContext';
-import { FontAwesome } from '@expo/vector-icons'; 
+import { FontAwesome, Feather } from '@expo/vector-icons';
 
 const IndexScreen = ({ navigation }) => {
   const { state, addBlogPost, deleteBlogPost } = useContext(Context);
@@ -18,7 +18,7 @@ const IndexScreen = ({ navigation }) => {
               <View style={styles.row}>
                 <Text style={styles.title}>{item.title} - {item.id}</Text>
                 <TouchableOpacity onPress={() => deleteBlogPost(item.id)}>
-                  <FontAwesome name="trash-o" color="black" style={styles.icon}/>
+                  <FontAwesome name="trash-o" color="black" style={styles.trash_icon}/>
                 </TouchableOpacity>
               </View>
             </TouchableOpacity>
@@ -28,6 +28,16 @@ const IndexScreen = ({ navigation }) => {
     </View>
   );
 };
+
+IndexScreen.navigationOptions = ({ navigation }) => {
+  return {
+    headerRight: () => (
+      <TouchableOpacity onPress={() => navigation.navigate('Create')}>
+        <Feather name="plus" style={styles.add_icon} size={30} color="black" />
+      </TouchableOpacity>
+    ),
+  };
+}
 
 const styles = StyleSheet.create({
   row: {
@@ -41,8 +51,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18
   },
-  icon: {
+  trash_icon: {
     fontSize: 24
+  },
+  add_icon: {
+    fontSize: 30,
+    marginRight: 10
   }
 });
 
